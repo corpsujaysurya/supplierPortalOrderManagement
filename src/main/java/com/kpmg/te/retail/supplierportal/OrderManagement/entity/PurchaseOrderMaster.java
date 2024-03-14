@@ -12,8 +12,6 @@ public class PurchaseOrderMaster {
 	private String estDelDate;
 	private String leadTime;
 	private String totalCost;
-	//private ArrayList<ItemDetails> itemDetails;
-	//private ArrayList<ASNDetails> asnDetails;
 	private String itemDetails;
 	private String asnDetails;
 	

@@ -8,8 +8,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
 
 
 @SpringBootApplication(scanBasePackages = { "com.kpmg.te.retail.supplierportal.OrderManagement" },exclude = {DataSourceAutoConfiguration.class })
@@ -33,5 +36,16 @@ public class SupplierPortalOrderManagementApplication {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(SupplierPortalOrderManagementApplication.class);
 	}
+	
+	@Bean
+    public WebMvcConfigurer corsConfigurer()
+    {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+            }
+        };
+    }
 
 }

@@ -3,12 +3,15 @@ package com.kpmg.te.retail.supplierportal.OrderManagement.controller;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.kpmg.te.retail.supplierportal.OrderManagement.dao.CustomerOrderDao;
 import com.kpmg.te.retail.supplierportal.OrderManagement.entity.CustomerOrderMaster;
+import com.kpmg.te.retail.supplierportal.OrderManagement.entity.InvoiceMaster;
+import com.kpmg.te.retail.supplierportal.OrderManagement.entity.TPLPartnerMaster;
 
 @Component
 public class CustomerOrderController {
@@ -44,6 +47,15 @@ public class CustomerOrderController {
 
 	public String dispatchCustomerOrder(CustomerOrderMaster customerOrderMaster) throws ClassNotFoundException {
 		return coDao.dispatchCustomerOrder(customerOrderMaster);
+	}
+
+	public ArrayList<TPLPartnerMaster> getPartnerData() throws ClassNotFoundException, SQLException {
+		return coDao.getTPLPartnerData();
+	}
+
+	public String createNewInvoice(List<InvoiceMaster> invoiceMaster) {
+		return coDao.generateInvoice(invoiceMaster);
+		
 	}
 
 }

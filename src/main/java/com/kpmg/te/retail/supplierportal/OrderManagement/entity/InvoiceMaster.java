@@ -3,7 +3,6 @@ package com.kpmg.te.retail.supplierportal.OrderManagement.entity;
 import java.util.ArrayList;
 
 public class InvoiceMaster {
-
 	private String uniqueId;
 	private String invoiceId;
 	private String invoiceDate;
@@ -24,6 +23,7 @@ public class InvoiceMaster {
 	private String senderAddress;
 	private String created_datetime;
 	private String customerId;
+	private String itemDetails;
 
 	private ArrayList<InvoicedItems> InvoicedItems;
 
@@ -186,13 +186,21 @@ public class InvoiceMaster {
 	public void setPoNumber(String poNumber) {
 		this.poNumber = poNumber;
 	}
-	
+
 	public String getCustomerId() {
 		return customerId;
 	}
 
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
+	}
+
+	public String getItemDetails() {
+		return itemDetails;
+	}
+
+	public void setItemDetails(String itemDetails) {
+		this.itemDetails = itemDetails;
 	}
 
 	@Override
@@ -205,7 +213,7 @@ public class InvoiceMaster {
 				+ invoiceDueDate + ", totalItemQty=" + totalItemQty + ", totalUniqueItems=" + totalUniqueItems
 				+ ", attachments=" + attachments + ", deliveryAddress=" + deliveryAddress + ", senderAddress="
 				+ senderAddress + ", created_datetime=" + created_datetime + ", customerId=" + customerId
-				+ ", InvoicedItems=" + InvoicedItems + "]";
+				+ ", itemDetails=" + itemDetails + ", InvoicedItems=" + InvoicedItems + "]";
 	}
 
 }

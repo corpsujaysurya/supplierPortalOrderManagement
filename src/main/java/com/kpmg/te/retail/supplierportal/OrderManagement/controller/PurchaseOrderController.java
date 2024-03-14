@@ -23,4 +23,9 @@ public class PurchaseOrderController {
 		return poDao.getPODetails(poId);
 	}
 
+	public PurchaseOrderMaster savePO(PurchaseOrderMaster poMaster) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

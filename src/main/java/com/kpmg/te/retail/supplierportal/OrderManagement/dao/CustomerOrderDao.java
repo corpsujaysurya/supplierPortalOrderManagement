@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 import com.kpmg.te.retail.supplierportal.OrderManagement.constants.OrderManagementConstants;
 import com.kpmg.te.retail.supplierportal.OrderManagement.entity.CustomerOrderMaster;
+import com.kpmg.te.retail.supplierportal.OrderManagement.entity.InvoiceMaster;
+import com.kpmg.te.retail.supplierportal.OrderManagement.entity.TPLPartnerMaster;
 import com.kpmg.te.retail.supplierportal.OrderManagement.utils.OrderManagementUtils;
 
 @Component
@@ -205,6 +208,28 @@ public class CustomerOrderDao {
 			}
 			throw new RuntimeException("Error");
 		}
+	}
+
+	public ArrayList<TPLPartnerMaster> getTPLPartnerData() throws SQLException, ClassNotFoundException {
+		TPLPartnerMaster tplPartner;
+		ArrayList<TPLPartnerMaster> tplPartnerList = new ArrayList<TPLPartnerMaster>();
+		Connection conn = getConnectioDetails();
+		String query = "SELECT  * from SUPPLIER_PORTAL.CUSTOMER_ORDER_TPLPARTNERS;";
+		Statement st = conn.createStatement();
+		ResultSet rs = st.executeQuery(query);
+		while (rs.next()) {
+			tplPartner = new TPLPartnerMaster();
+			tplPartner.setPartnerId(rs.getString("PARTNER_ID"));
+			tplPartner.setPartnerName(rs.getString("PARTNER_NAME"));
+			tplPartnerList.add(tplPartner);
+		}
+		logger.info("[C]CustomerOrderDao::[M]getAllCOListingData -> The Item list is: " + tplPartnerList.toString());
+		return tplPartnerList;
+	}
+
+	public String generateInvoice(List<InvoiceMaster> invoiceMaster) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
