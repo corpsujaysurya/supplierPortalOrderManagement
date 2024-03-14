@@ -3,7 +3,6 @@ package com.kpmg.te.retail.supplierportal.OrderManagement.service;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kpmg.te.retail.supplierportal.OrderManagement.controller.CustomerOrderController;
 import com.kpmg.te.retail.supplierportal.OrderManagement.entity.CustomerOrderMaster;
 import com.kpmg.te.retail.supplierportal.OrderManagement.entity.InvoiceMaster;
+import com.kpmg.te.retail.supplierportal.OrderManagement.entity.ItemMaster;
 import com.kpmg.te.retail.supplierportal.OrderManagement.entity.TPLPartnerMaster;
 import com.kpmg.te.retail.supplierportal.OrderManagement.manager.CustomerOrderManager;
 import com.kpmg.te.retail.supplierportal.OrderManagement.utils.OrderManagementUtils;
@@ -57,6 +57,31 @@ public class CustomerOrderService {
 		return  coDetails;
 	}
 	
+	
+	@RequestMapping(path = "/updateCOStatus", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String updateCOStatus(@RequestParam String coId,@RequestParam String coStatus) throws ClassNotFoundException, SQLException {
+		String updateStatus = coController.updateCOStatus(coId,coStatus);
+		logger.info("[C]CustomerOrderService::[M]updateCOStatus -> The Customer Order status is updated");
+		return  updateStatus;
+	}
+	
+	@RequestMapping(path = "/saveIntermediateCO", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String saveCO(@RequestParam String coId,@RequestParam String itemDetails) throws ClassNotFoundException, SQLException {
+		String updateStatus = coController.saveItemDetails(coId,itemDetails);
+		logger.info("[C]CustomerOrderService::[M]saveCO -> The Customer Order is saved");
+		return  updateStatus;
+	}
+	
+	@RequestMapping(path = "/getItemPrice", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ArrayList<ItemMaster> getItemPrice(@RequestParam(value="itemId[]") String[] itemId) throws ClassNotFoundException, SQLException {
+		logger.info(itemId.toString());
+		ArrayList<ItemMaster> itemDetails = new ArrayList<ItemMaster>();
+		itemDetails = coController.getItemPrice(itemId);
+		logger.info("[C]CustomerOrderService::[M]getItemPrice -> The Item Details list to display is: "+itemDetails.toString());
+		return  itemDetails;
+	}
+	
+	
 	@RequestMapping(path = "/getTPLPartners", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ArrayList<TPLPartnerMaster> getTPLPartners() throws ClassNotFoundException, SQLException {
 		ArrayList<TPLPartnerMaster> tplPartnerList = new ArrayList<TPLPartnerMaster>();
@@ -66,23 +91,11 @@ public class CustomerOrderService {
 	}
 	
 	
-	@RequestMapping(path = "/generateInvoice", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String generateInvoice(@RequestBody String coId, @RequestBody String invoiceTotalAmt,
-			@RequestBody String totalItemQty, @RequestBody String totalUniqItems, @RequestBody String deliveryAddress,
-			@RequestBody String dispatchLocation) throws ClassNotFoundException, SQLException, ParseException {
-		String invoiceId = new String();
-		invoiceId = coController.createInvoice(coId, invoiceTotalAmt, totalItemQty, totalUniqItems, deliveryAddress,
-				dispatchLocation);
-		logger.info("[C]CustomerOrderService::[M]generateInvoice -> The Customer Order invoice id to display is: "
-				+ invoiceId.toString());
-		return invoiceId;
-	}
-	
-	@RequestMapping(path = "/generateInvoice", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String createInvoice(@RequestBody List<InvoiceMaster> invoiceMaster) throws ClassNotFoundException, SQLException {
+	@RequestMapping(path = "createInvoice", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public String createInvoice(@RequestBody InvoiceMaster invoiceMaster) throws ClassNotFoundException, SQLException, ParseException {
 		String message  = new String();
-		coController.createNewInvoice(invoiceMaster);
-		logger.info("[C]CustomerOrderService::[M]sendPaymentReminder -> The new invoice details to display is: "+invoiceMaster.toString());
+		message = coController.createNewInvoice(invoiceMaster);
+		logger.info("[C]InvoiceService::[M]createInvoice -> The new invoice number  to display is: "+message.toString());
 		return  message;
 	}
 

@@ -1,6 +1,5 @@
 package com.kpmg.te.retail.supplierportal.OrderManagement.entity;
 
-import java.util.ArrayList;
 
 public class InvoiceMaster {
 	private String uniqueId;
@@ -25,7 +24,7 @@ public class InvoiceMaster {
 	private String customerId;
 	private String itemDetails;
 
-	private ArrayList<InvoicedItems> InvoicedItems;
+	private String InvoicedItems;
 
 	public String getUniqueId() {
 		return uniqueId;
@@ -171,11 +170,11 @@ public class InvoiceMaster {
 		this.created_datetime = created_datetime;
 	}
 
-	public ArrayList<InvoicedItems> getInvoicedItems() {
+	public String  getInvoicedItems() {
 		return InvoicedItems;
 	}
 
-	public void setInvoicedItems(ArrayList<InvoicedItems> invoicedItems) {
+	public void setInvoicedItems(String invoicedItems) {
 		InvoicedItems = invoicedItems;
 	}
 

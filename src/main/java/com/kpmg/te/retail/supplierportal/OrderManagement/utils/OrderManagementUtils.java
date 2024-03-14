@@ -58,5 +58,21 @@ public class OrderManagementUtils {
 				"[C]OrderManagementUtils::[M]generateAWB -> The AWB generated is:" + awbBill.toString());
 		return awbBill;
 	}
+	
+	public StringBuilder toString(String[] a) {
+		int iMax = a.length - 1;
+		StringBuilder b = new StringBuilder();
+		b.append('(');
+		for (int i = 0;; i++) {
+			b.append("'" + String.valueOf(a[i]) + "'");
+			if (i == iMax) {
+				b.append(')').toString();
+				return b;
+			}
+			b.append(", ");
+			System.out.println(b.toString());
+		}
+
+	}
 
 }

@@ -3,7 +3,6 @@ package com.kpmg.te.retail.supplierportal.OrderManagement.controller;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.kpmg.te.retail.supplierportal.OrderManagement.dao.CustomerOrderDao;
 import com.kpmg.te.retail.supplierportal.OrderManagement.entity.CustomerOrderMaster;
 import com.kpmg.te.retail.supplierportal.OrderManagement.entity.InvoiceMaster;
+import com.kpmg.te.retail.supplierportal.OrderManagement.entity.ItemMaster;
 import com.kpmg.te.retail.supplierportal.OrderManagement.entity.TPLPartnerMaster;
 
 @Component
@@ -53,9 +53,21 @@ public class CustomerOrderController {
 		return coDao.getTPLPartnerData();
 	}
 
-	public String createNewInvoice(List<InvoiceMaster> invoiceMaster) {
+	public String createNewInvoice(InvoiceMaster invoiceMaster) throws ClassNotFoundException, ParseException {
 		return coDao.generateInvoice(invoiceMaster);
 		
+	}
+
+	public String updateCOStatus(String coId, String coStatus) throws ClassNotFoundException, SQLException {
+		return coDao.updateCOStatus(coId,coStatus);
+	}
+
+	public String saveItemDetails(String coId, String itemDetails) throws ClassNotFoundException, SQLException {
+		return coDao.saveCODetailsInter(coId,itemDetails);
+	}
+
+	public ArrayList<ItemMaster> getItemPrice(String[] itemId) throws ClassNotFoundException, SQLException {
+		return coDao.saveCODetailsInter(itemId);
 	}
 
 }
