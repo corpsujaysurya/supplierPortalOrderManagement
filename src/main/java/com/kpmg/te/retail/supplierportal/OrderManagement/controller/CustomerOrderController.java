@@ -41,12 +41,12 @@ public class CustomerOrderController {
 		return coDao.generateAWB(invoiceId);
 	}
 
-	public String submitCustomerOrder(CustomerOrderMaster customerOrderMaster) throws ClassNotFoundException {
-		return coDao.submitCustomerOrder(customerOrderMaster);
+	public String submitCustomerOrder(String customerOrderId) throws ClassNotFoundException, SQLException {
+		return coDao.submitCustomerOrder(customerOrderId);
 	}
 
-	public String dispatchCustomerOrder(CustomerOrderMaster customerOrderMaster) throws ClassNotFoundException {
-		return coDao.dispatchCustomerOrder(customerOrderMaster);
+	public String dispatchCustomerOrder(String customerOrderId) throws ClassNotFoundException, SQLException {
+		return coDao.dispatchCustomerOrder(customerOrderId);
 	}
 
 	public ArrayList<TPLPartnerMaster> getPartnerData() throws ClassNotFoundException, SQLException {

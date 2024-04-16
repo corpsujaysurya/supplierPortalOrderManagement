@@ -138,76 +138,49 @@ public class CustomerOrderDao {
 		return omUtils.generateAWB();
 	}
 
-	public String submitCustomerOrder(CustomerOrderMaster customerOrderMaster) throws ClassNotFoundException {
-		PreparedStatement preparedStatement;
+	public String submitCustomerOrder(String customerOrderId) throws ClassNotFoundException, SQLException {
+		Connection conn = getConnectioDetails();
+		String updateStatus = "Invalid";
 		try {
-			Connection conn = getConnectioDetails();
-			conn.setAutoCommit(true);
-			String insertQuery = "INSERT INTO SUPPLIER_PORTAL.CUSTOMER_ORDER_MASTER(UNIQUE_ID,CO_NUMBER,MOBILE_NUM,CREATION_DATE,EXP_DELIVERY_DATE,ORDER_STATUS,GIFT_WRAP,GIFT_MESSAGE,CUSTOMER_NAME,DELIVERY_TYPE,SHIPPING_ADDRESS,ITEM_DETAILS)"
-					+ " VALUES" + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			preparedStatement = conn.prepareStatement(insertQuery);
-			preparedStatement.setString(1, customerOrderMaster.getUniqueId());
-			preparedStatement.setString(2, customerOrderMaster.getCoNumber());
-			preparedStatement.setString(3, customerOrderMaster.getCustomerMobNum());
-			preparedStatement.setString(4, customerOrderMaster.getOrderCreationDate());
-			preparedStatement.setString(5, customerOrderMaster.getExpectedDelDate());
-			preparedStatement.setString(6, "Ready To Dispatch");
-			preparedStatement.setString(7, customerOrderMaster.getGiftWrap());
-			preparedStatement.setString(8, customerOrderMaster.getGiftMessage());
-			preparedStatement.setString(9, customerOrderMaster.getCustomerName());
-			preparedStatement.setString(10, customerOrderMaster.getDeliveryType());
-			preparedStatement.setString(11, customerOrderMaster.getShippingAddress());
-			preparedStatement.setString(12, customerOrderMaster.getItemDetails());
-			preparedStatement.addBatch();
-			preparedStatement.close();
-			conn.close();
-			return "Customer Order status - READY TO DISPATCH";
-
-		} catch (SQLException ex) {
-			System.err.println("SQLException information");
-			while (ex != null) {
-				System.err.println("Error msg: " + ex.getMessage());
-				ex = ex.getNextException();
-			}
-			throw new RuntimeException("Error");
+			conn = getConnectioDetails();
+			String query = "UPDATE SUPPLIER_PORTAL.CUSTOMER_ORDER_MASTER SET ORDER_STATUS = ? WHERE CO_NUMBER = ?  ";
+			logger.info(query);
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "Submitted");
+			pstmt.setString(2, customerOrderId);
+			int updateStatusCode = pstmt.executeUpdate();
+			logger.info(Integer.toString(updateStatusCode));
+			updateStatus = (updateStatusCode == 1) ? ("SUCCESS") : ("FAILURE");
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
 		}
+		return updateStatus;
 
 	}
 
-	public String dispatchCustomerOrder(CustomerOrderMaster customerOrderMaster) throws ClassNotFoundException {
-		PreparedStatement preparedStatement;
+	public String dispatchCustomerOrder(String customerOrderId) throws ClassNotFoundException, SQLException {
+		Connection conn = getConnectioDetails();
+		String updateStatus = "Invalid";
 		try {
-			Connection conn = getConnectioDetails();
-			conn.setAutoCommit(true);
-			String insertQuery = "INSERT INTO SUPPLIER_PORTAL..CUSTOMER_ORDER_MASTER(UNIQUE_ID, CO_NUMBER,MOBILE_NUM,CREATION_DATE,EXP_DELIVERY_DATE,ORDER_STATUS,GIFT_WRAP,GIFT_MESSAGE,CUSTOMER_NAME,DELIVERY_TYPE,SHIPPING_ADDRESS,ITEM_DETAILS)"
-					+ " VALUES" + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-			preparedStatement = conn.prepareStatement(insertQuery);
-			preparedStatement = conn.prepareStatement(insertQuery);
-			preparedStatement.setString(1, customerOrderMaster.getUniqueId());
-			preparedStatement.setString(2, customerOrderMaster.getCoNumber());
-			preparedStatement.setString(3, customerOrderMaster.getCustomerMobNum());
-			preparedStatement.setString(4, customerOrderMaster.getOrderCreationDate());
-			preparedStatement.setString(5, customerOrderMaster.getExpectedDelDate());
-			preparedStatement.setString(6, "Partially Processed");
-			preparedStatement.setString(7, customerOrderMaster.getGiftWrap());
-			preparedStatement.setString(8, customerOrderMaster.getGiftMessage());
-			preparedStatement.setString(9, customerOrderMaster.getCustomerName());
-			preparedStatement.setString(10, customerOrderMaster.getDeliveryType());
-			preparedStatement.setString(11, customerOrderMaster.getShippingAddress());
-			preparedStatement.setString(12, customerOrderMaster.getItemDetails());
-			preparedStatement.addBatch();
-			preparedStatement.close();
-			conn.close();
-			return "Customer Order status - PARITALLY PROCESSED";
-
-		} catch (SQLException ex) {
-			System.err.println("SQLException information");
-			while (ex != null) {
-				System.err.println("Error msg: " + ex.getMessage());
-				ex = ex.getNextException();
-			}
-			throw new RuntimeException("Error");
+			conn = getConnectioDetails();
+			String query = "UPDATE SUPPLIER_PORTAL.CUSTOMER_ORDER_MASTER SET ORDER_STATUS = ? WHERE CO_NUMBER = ?  ";
+			logger.info(query);
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, "Ready For Dispatch");
+			pstmt.setString(2, customerOrderId);
+			int updateStatusCode = pstmt.executeUpdate();
+			logger.info(Integer.toString(updateStatusCode));
+			updateStatus = (updateStatusCode == 1) ? ("SUCCESS") : ("FAILURE");
+			pstmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
 		}
+		return updateStatus;
 	}
 
 	public ArrayList<TPLPartnerMaster> getTPLPartnerData() throws SQLException, ClassNotFoundException {

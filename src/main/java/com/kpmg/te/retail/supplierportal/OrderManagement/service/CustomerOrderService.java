@@ -115,8 +115,12 @@ public class CustomerOrderService {
 		return  awbBill;
 	}
 	
+	/************************************************************************************************************************************************************************** */
+	/*													CUSTOMER ORDERS MODULE SUBMIT/DISPATCH REST END-POINTS                                                                                 */
+	/**************************************************************************************************************************************************************************/	
+	
 	@RequestMapping(path = "/submitCO", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String submitCO(@RequestBody CustomerOrderMaster customerOrderMaster) throws ClassNotFoundException, SQLException {
+	public String submitCO(@RequestBody String customerOrderMaster) throws ClassNotFoundException, SQLException {
 		String status;
 		status = coController.submitCustomerOrder(customerOrderMaster);
 		logger.info("[C]CustomerOrderService::[M]submitCO -> The status of Customer Order submission is: "+status.toString());
@@ -124,7 +128,7 @@ public class CustomerOrderService {
 	}
 	
 	@RequestMapping(path = "/dispatchCO", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String dispatchCO(@RequestBody CustomerOrderMaster customerOrderMaster) throws ClassNotFoundException, SQLException {
+	public String dispatchCO(@RequestBody String customerOrderMaster) throws ClassNotFoundException, SQLException {
 		String status;
 		status = coController.dispatchCustomerOrder(customerOrderMaster);
 		logger.info("[C]OrderManagementService::[M]submitCO -> The status of Customer Order submission is: "+status.toString());
