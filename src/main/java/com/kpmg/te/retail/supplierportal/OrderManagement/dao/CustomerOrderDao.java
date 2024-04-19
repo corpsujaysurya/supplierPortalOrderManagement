@@ -130,11 +130,11 @@ public class CustomerOrderDao {
 		}
 	}
 
-	public String generateEway(String invoiceId) {
+	public String generateEway() {
 		return omUtils.generateEway();
 	}
 
-	public String generateAWB(String invoiceId) {
+	public String generateAWB() {
 		return omUtils.generateAWB();
 	}
 

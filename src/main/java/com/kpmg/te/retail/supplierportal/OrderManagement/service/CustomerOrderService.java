@@ -100,17 +100,17 @@ public class CustomerOrderService {
 	}
 
 	@RequestMapping(path = "/generateEway", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String generateEway(@RequestBody String invoiceList) throws ClassNotFoundException, SQLException {
+	public String generateEway() throws ClassNotFoundException, SQLException {
 		String ewayBillList = new String();
-		ewayBillList = coController.generateEway(invoiceList);
+		ewayBillList = coController.generateEway();
 		logger.info("[C]CustomerOrderService::[M]getCODetails -> The Customer Order Details list to display is: "+ewayBillList.toString());
 		return  ewayBillList;
 	}
 	
 	@RequestMapping(path = "/generateAWB", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public String generateAWB(@RequestBody String invoiceList) throws ClassNotFoundException, SQLException {
+	public String generateAWB() throws ClassNotFoundException, SQLException {
 		String awbBill = new  String();
-		awbBill = coController.generateAWB(invoiceList);
+		awbBill = coController.generateAWB();
 		logger.info("[C]CustomerOrderService::[M]generateAWB -> The Customer Order Details list to display is: "+awbBill.toString());
 		return  awbBill;
 	}

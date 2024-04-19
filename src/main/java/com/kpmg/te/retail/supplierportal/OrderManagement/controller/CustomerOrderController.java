@@ -33,12 +33,12 @@ public class CustomerOrderController {
 				dispatchLocation);
 	}
 
-	public String generateEway(String invoiceId) {
-		return coDao.generateEway(invoiceId);
+	public String generateEway() {
+		return coDao.generateEway();
 	}
 
-	public String generateAWB(String invoiceId) {
-		return coDao.generateAWB(invoiceId);
+	public String generateAWB() {
+		return coDao.generateAWB();
 	}
 
 	public String submitCustomerOrder(String customerOrderId) throws ClassNotFoundException, SQLException {
